@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    @include('frontend.layout.head')
+    <?php echo $__env->make('frontend.layout.head', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -12,15 +12,15 @@
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
-      @if($errors->any())
+      <?php if($errors->any()): ?>
       <div class="alert alert-danger">
-        @foreach($errors->all() as $error)
-        <li>{{$error}}</li>
-        @endforeach
+        <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <li><?php echo e($error); ?></li>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
       </div>
-      @endif
-      <form action="{{'login'}}" method="post">
-      @csrf 
+      <?php endif; ?>
+      <form action="<?php echo e('login'); ?>" method="post">
+      <?php echo csrf_field(); ?> 
         <div class="input-group mb-3"><br>
           <input type="email" class="form-control" name="email" placeholder="Email" value="">
           <div class="input-group-append">
@@ -58,7 +58,7 @@
         <a href="forgot-password.html">I forgot my password</a>
       </p> -->
       <!-- <p class="mb-1">
-        <a href="{{url('register')}}">Register New Employee</a>
+        <a href="<?php echo e(url('register')); ?>">Register New Employee</a>
       </p> -->     
     </div>
     <!-- /.login-card-body -->
@@ -66,4 +66,4 @@
 </div>
 <!-- /.login-box -->
 </body>
-</html>
+</html><?php /**PATH C:\xampp\htdocs\laravel\resources\views/frontend/login.blade.php ENDPATH**/ ?>

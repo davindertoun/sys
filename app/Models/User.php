@@ -24,6 +24,7 @@ class User extends Authenticatable
         'dob',
         'profile_img',
         'department',
+        'last_login',
     ];
 
     /**

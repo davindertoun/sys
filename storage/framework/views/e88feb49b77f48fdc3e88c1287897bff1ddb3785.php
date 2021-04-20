@@ -1,5 +1,5 @@
-@extends('frontend.app')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <div class="row mb-2">
@@ -8,10 +8,10 @@
           </div>
           <div class="col-sm-6">
             <div class="dropdown float-right">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{auth()->user()->name}}</a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo e(auth()->user()->name); ?></a>
               <div class="dropdown-menu">
                 <a href="#" class="dropdown-item">Action</a>
-                <a href="{{ URL('logout') }}" class="dropdown-item">LogOut</a>
+                <a href="<?php echo e(URL('logout')); ?>" class="dropdown-item">LogOut</a>
               </div>
             </div>
           </div>
@@ -25,23 +25,23 @@
             <div class="card-body box-profile">
               <div class="text-center">
                 <img class="profile-user-img img-fluid img-circle"
-                src="{{ auth()->user()->profile_img }}"
+                src="<?php echo e(auth()->user()->profile_img); ?>"
                 alt="User profile picture">
               </div>
-              <h3 class="profile-username text-center">{{ auth()->user()->name }}</h3>
-              <p class="text-muted text-center">{{ auth()->user()->role->name }}</p>
+              <h3 class="profile-username text-center"><?php echo e(auth()->user()->name); ?></h3>
+              <p class="text-muted text-center"><?php echo e(auth()->user()->role->name); ?></p>
               <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
                   <b>DOB</b>
-                  <p class="float-right">{{ auth()->user()->dob }}</p>
+                  <p class="float-right"><?php echo e(auth()->user()->dob); ?></p>
                 </li>
                 <li class="list-group-item">
                   <b>Department</b>
-                  <p class="float-right">{{ auth()->user()->department}}</p>
+                  <p class="float-right"><?php echo e(auth()->user()->department); ?></p>
                 </li>
                 <li class="list-group-item">
                   <b>Email</b>
-                  <p class="float-right">{{ auth()->user()->email }}</p>
+                  <p class="float-right"><?php echo e(auth()->user()->email); ?></p>
                 </li>
               </ul>
             </div>
@@ -56,20 +56,20 @@
               <!-- /.card-header -->
               <div class="card-body">
               <ul id="user_status"class="list-group">
-                @foreach ($Birthday as $Bday)
+                <?php $__currentLoopData = $Birthday; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $Bday): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <li class="list-inline-item">
-                  <p class="float-right"><b>{{$Bday->name}}</b></p>
-                  @if($Bday->last_login > time())
+                  <p class="float-right"><b><?php echo e($Bday->name); ?></b></p>
+                  <?php if($Bday->last_login > time()): ?>
                   <div class="float-left">
-                    <img style=" margin-bottom:10px; float:left;width:50px;height:50px;" class="profile-user-img img-fluid img-circle border-success"src="{{$Bday->profile_img }}"alt="User profile picture">
+                    <img style=" margin-bottom:10px; float:left;width:50px;height:50px;" class="profile-user-img img-fluid img-circle border-success"src="<?php echo e($Bday->profile_img); ?>"alt="User profile picture">
                   </div>
-                  @else
+                  <?php else: ?>
                   <div class="float-left">
-                    <img style=" margin-bottom:10px; float:left;width:50px;height:50px;" class="profile-user-img img-fluid img-circle border-danger"src="{{$Bday->profile_img }}"alt="User profile picture">
+                    <img style=" margin-bottom:10px; float:left;width:50px;height:50px;" class="profile-user-img img-fluid img-circle border-danger"src="<?php echo e($Bday->profile_img); ?>"alt="User profile picture">
                   </div>
-                  @endif
+                  <?php endif; ?>
                 </li>
-                @endforeach
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
               </ul>
               </div>
               <!-- /.card-body -->
@@ -79,14 +79,14 @@
           <!-- /.col -->
           <div class="col-md-9">
             <div class="card">
-              @if(session('success'))
+              <?php if(session('success')): ?>
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
-                      <strong>{{session('success')}}</strong>
+                      <strong><?php echo e(session('success')); ?></strong>
                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    @endif
+                    <?php endif; ?>
               <div class="card-header p-2">
                 <ul class="nav nav-pills">
                   <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Attendance</a></li>
@@ -94,19 +94,19 @@
                   <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Leave List</a></li>
                   
                   <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Leave</a></li>
-                  <li class="nav-item"><a class="nav-link" href="{{ URL('logout') }}">Logout</a></li>
+                  <li class="nav-item"><a class="nav-link" href="<?php echo e(URL('logout')); ?>">Logout</a></li>
                 </ul>
-                @if(empty($today))
-                <button name="timein" class="btn btn-success float-right" getId="{{auth()->user()->id}}" id="timeIn">Time In</button>
-                @endif
-                @if(!empty($data))
-                <button name="timeout" class="btn btn-success float-right" getId="{{auth()->user()->id}}"  id="timeOut" >Time Out</button>
-                @else
-                <button name="timeout" class="btn btn-success float-right" getId="{{auth()->user()->id}}" style="display: none;" id="timeOut" >Time Out</button>
-                @endif
-                @if(!empty($today) && empty($data))
-                <button class="btn btn-success float-right" >Total Working Time : {{$today->working_hours}}</button>
-                @endif
+                <?php if(empty($today)): ?>
+                <button name="timein" class="btn btn-success float-right" getId="<?php echo e(auth()->user()->id); ?>" id="timeIn">Time In</button>
+                <?php endif; ?>
+                <?php if(!empty($data)): ?>
+                <button name="timeout" class="btn btn-success float-right" getId="<?php echo e(auth()->user()->id); ?>"  id="timeOut" >Time Out</button>
+                <?php else: ?>
+                <button name="timeout" class="btn btn-success float-right" getId="<?php echo e(auth()->user()->id); ?>" style="display: none;" id="timeOut" >Time Out</button>
+                <?php endif; ?>
+                <?php if(!empty($today) && empty($data)): ?>
+                <button class="btn btn-success float-right" >Total Working Time : <?php echo e($today->working_hours); ?></button>
+                <?php endif; ?>
               </div><!-- /.card-header -->
               <div class="card-body">
                 <div class="tab-content">
@@ -121,31 +121,31 @@
                         <th>Status</th>
                       </tr>
                       <tbody id="ajax_tr">
-                        @php ($count=0)
-                        @foreach ($attendance as $att)
-                        @php($count++)
+                        <?php ($count=0); ?>
+                        <?php $__currentLoopData = $attendance; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $att): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php ($count++); ?>
                         <tr>
-                        <td>{{$count}}</td>
-                        <td>{{$att->time_in}}</td>
-                        <td>{{$att->time_out}}</td>
-                        <td>{{$att->working_hours}}</td>
-                        @if($att->state_id==0)
+                        <td><?php echo e($count); ?></td>
+                        <td><?php echo e($att->time_in); ?></td>
+                        <td><?php echo e($att->time_out); ?></td>
+                        <td><?php echo e($att->working_hours); ?></td>
+                        <?php if($att->state_id==0): ?>
                         <td class="text-warning">Pending...</td>
-                        @endif
-                        @if($att->state_id==1)
+                        <?php endif; ?>
+                        <?php if($att->state_id==1): ?>
                         <td class="text-success">Present</td>
-                        @endif
-                        @if($att->state_id==2)
+                        <?php endif; ?>
+                        <?php if($att->state_id==2): ?>
                         <td class="text-danger">Absent</td>
-                        @endif
-                        @if($att->state_id==3)
+                        <?php endif; ?>
+                        <?php if($att->state_id==3): ?>
                         <td class="text-primary">Half Day</td>
-                        @endif
-                        @if($att->state_id==4)
+                        <?php endif; ?>
+                        <?php if($att->state_id==4): ?>
                         <td class="text-secondary">Short Leave</td>
-                        @endif
+                        <?php endif; ?>
                         </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </tbody>
                     </table>
                   </div>
@@ -160,37 +160,37 @@
                         <th>Status</th>
                       </tr>
                       <tbody>
-                        @php ($count=0)
-                        @foreach ($result as $data)
-                        @php($count++)
+                        <?php ($count=0); ?>
+                        <?php $__currentLoopData = $result; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php ($count++); ?>
                         <tr>
-                        <td>{{$count}}</td>
-                        <td>{{$data->start_date}}</td>
-                        <td>{{$data->end_date}}</td>
-                        @if($data->state_id==1)
+                        <td><?php echo e($count); ?></td>
+                        <td><?php echo e($data->start_date); ?></td>
+                        <td><?php echo e($data->end_date); ?></td>
+                        <?php if($data->state_id==1): ?>
                         <td class="text-warning">Pending...</td>
-                        @endif
-                        @if($data->state_id==2)
+                        <?php endif; ?>
+                        <?php if($data->state_id==2): ?>
                         <td class="text-success">Approved</td>
-                        @endif
-                        @if($data->state_id==3)
+                        <?php endif; ?>
+                        <?php if($data->state_id==3): ?>
                         <td class="text-danger">Rejected</td>
-                        @endif
+                        <?php endif; ?>
                         </tr>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </tbody>
                     </table>
                   </div>
                   <!-- /.tab-pane -->
                   <div class="tab-pane" id="settings">
-                     <form action="{{url('leave')}}"  class="form-horizontal" autocomplete="off" method="post">
-                      @csrf
+                     <form action="<?php echo e(url('leave')); ?>"  class="form-horizontal" autocomplete="off" method="post">
+                      <?php echo csrf_field(); ?>
                       <div class="form-group row">
                         <!-- <label  for="inputName" class="col-sm-2 col-form-label">User Id</label> -->
                       </div>
                       <div class="form-group row">
                         <div class="col-sm-10">
-                          <input name="user_id" type="hidden" class="form-control"  value="{{auth::user()->id}}">
+                          <input name="user_id" type="hidden" class="form-control"  value="<?php echo e(auth::user()->id); ?>">
                         </div>
                       </div>
                       <div class="form-group row">
@@ -278,7 +278,7 @@
     newDate = yr + '-' + month + '-' + day  ;
     var id = $(this).attr('getId');
       $.ajax({ 
-            url:"{{url('timein')}}",
+            url:"<?php echo e(url('timein')); ?>",
             type: 'POST',
             data: { timein, id,newDate },
             success: function(dataResult){
@@ -313,7 +313,7 @@
     newdt = yr + '-' + month + '-' + day  ;
     var user_id = $(this).attr('getId');
     $.ajax({
-            url:"{{url('timeout')}}",
+            url:"<?php echo e(url('timeout')); ?>",
             type: 'POST',
             data: { timeout ,user_id,newdt},
             success: function(data){
@@ -337,7 +337,7 @@ function updateUserstatus(){
             }
         });
       $.ajax({
-        url:"{{url('update_user_status')}}",
+        url:"<?php echo e(url('update_user_status')); ?>",
         type: 'POST',
         success:function()
         {
@@ -351,7 +351,7 @@ function getUserstatus(){
             }
         });
     $.ajax({
-        url:"{{url('get_user_status')}}",
+        url:"<?php echo e(url('get_user_status')); ?>",
         type: 'POST',
         success:function(get){
         console.log(get);
@@ -366,4 +366,5 @@ function getUserstatus(){
             getUserstatus();
           },5000);
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('frontend.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\laravel\resources\views/index.blade.php ENDPATH**/ ?>

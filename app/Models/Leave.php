@@ -16,5 +16,7 @@ class Leave extends Model
         'leave_status',
         'description',
         'reject_description',
+        'state_id',
+        'type_id',
     ];
 }

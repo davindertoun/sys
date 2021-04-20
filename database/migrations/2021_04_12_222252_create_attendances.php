@@ -23,7 +23,7 @@ class CreateAttendances extends Migration
             $table->string('is_deleted')->nullable();
             $table->integer('type_id')->nullable();
             $table->integer('state_id')->default(0);
-            $table->timestamps();
+            $table->timestamps = false;
         });
     }
 

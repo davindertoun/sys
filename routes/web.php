@@ -7,7 +7,9 @@ use App\Http\controllers\Frontend\ManagerController;
 use App\Http\controllers\Frontend\LeaveController;
 use App\Http\controllers\Frontend\UserController;
 use App\Http\controllers\Frontend\TimeinController;
-use App\Http\controllers\Frontend\TimeoutController;
+use App\Http\controllers\Frontend\TimeoutController;  
+use App\Http\controllers\Frontend\UserStatusController;
+use App\Http\controllers\Frontend\GetStatusController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,6 +27,8 @@ Route::group(['middleware'=>['custom']],function()
 	Route::get('dashboard', function () {return view('frontend.dashboard.dashboard');});
 	Route::post('leave',[LeaveController::class,'leave']);
 	Route::get('logout', [LoginController::class, 'logout']);
+	Route::Post('update_user_status',[UserStatusController::class,'update_user_status']);
+	Route::Post('get_user_status',[GetStatusController::class,'get_user_status']);
 });
  // ---------------Middleware for User ----------------
 Route::group(['middleware' => ['user']],function () 
@@ -36,7 +40,7 @@ Route::group(['middleware' => ['user']],function ()
 Route::group(['middleware' => ['tl_middleware']],function () 
 {
     Route::get('tl',[TlController::class,'profile']);
-    Route::get('profile', [TlController::class, 'profile']);
+    // Route::get('profile', [TlController::class, 'profile']);
 });
 // ----------------------Middleware for Manager ----------
 Route::group(['middleware' => ['manager']],function () 
@@ -45,7 +49,7 @@ Route::group(['middleware' => ['manager']],function ()
     Route::get('manager',[ManagerController::class,'profile']);
 });
 // ----------------Routes for Login-----------------
-Route::get('/', [LoginController::class, 'login']);
+Route::get('/', [LoginController::class, 'abc']);
 Route::Post('login', [LoginController::class, 'login']);
 Route::Post('timein',[TimeinController::class,'time_in']);
 Route::Post('timeout',[TimeoutController::class,'time_out']);

@@ -45,7 +45,12 @@
                 </a>
               </li>
                <li class="nav-item">
+                @if(auth()->user()->isUser())
                 <a href="{{url('profile')}}" class="nav-link">
+                @endif
+                @if(auth()->user()->isTL())
+                <a href="{{url('tl')}}" class="nav-link">
+                @endif
                   <i class="nav-icon fa fa-user"></i>
                   
                   <p>
