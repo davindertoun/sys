@@ -94,7 +94,6 @@
                   <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Leave List</a></li>
                   
                   <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Leave</a></li>
-                  <li class="nav-item"><a class="nav-link" href="{{ URL('logout') }}">Logout</a></li>
                 </ul>
                 @if(empty($today))
                 <button name="timein" class="btn btn-success float-right" getId="{{auth()->user()->id}}" id="timeIn">Time In</button>
