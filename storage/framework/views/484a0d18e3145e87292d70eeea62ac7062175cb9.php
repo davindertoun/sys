@@ -11,7 +11,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo e(auth()->user()->name); ?></a>
               <div class="dropdown-menu">
                 <a href="#" class="dropdown-item">Action</a>
-                <a href="#" class="dropdown-item">Another action</a>
+                <a href="<?php echo e(URL('logout')); ?>" class="dropdown-item">LogOut </a>
               </div>
             </div>
           </div>
@@ -79,14 +79,23 @@
           <!-- /.col -->
           <div class="col-md-9">
             <div class="card">
+              <?php if(session('success')): ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                      <strong><?php echo e(session('success')); ?></strong>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <?php endif; ?>
               <div class="card-header p-2">
                 <ul class="nav nav-pills">
                   <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Attendance</a></li>
                   <li class="nav-item"><a class="nav-link" href="#task" data-toggle="tab">Task Manage</a></li>
                   <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Leave List</a></li>
-                  
                   <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Leave</a></li>
-                  <li class="nav-item"><a class="nav-link" href="<?php echo e(URL('logout')); ?>">Logout</a></li>
+                  <li class="nav-item"><a class="nav-link" href="<?php echo e(url('employee_data')); ?>" >Employee data</a></li>
+                  <li class="nav-item"><a class="nav-link" href="<?php echo e(url('user_leave_request')); ?>">Leave Requests</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#feedback" data-toggle="tab">Feedback</a></li>
                 </ul>
                 <?php if(empty($today)): ?>
                 <button name="timein" class="btn btn-success float-right" getId="<?php echo e(auth()->user()->id); ?>" id="timeIn">Time In</button>
@@ -143,8 +152,26 @@
                   </div>
                   <div class="tab-pane" id="task">
                     <!-- The task manage -->
-                    
                   </div>
+                  <!-- FeedBack Section -->
+                  <div class="tab-pane" id="feedback">
+                    <form action="<?php echo e(url('feedback')); ?>" class="form-horizontal" autocomplete="off" method="post">
+                      <?php echo csrf_field(); ?>
+                      <div class="form-group row">
+                        <input type="hidden" name="id" value="<?php echo e(auth()->user()->id); ?>">
+                        <label for="inputExperience" class="col-sm-2 col-form-label">Feedback</label>
+                        <div class="col-sm-10">
+                          <textarea name="feedback" class="form-control" placeholder="give your feedback" required="required"></textarea>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="offset-sm-2 col-sm-10">
+                          <button  value="submit" name="submit" type="submit" class="btn btn-danger">Submit</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- End Feedback section -->
                   <!-- /.tab-pane -->
                   <div class="tab-pane" id="timeline">
                     <!-- The timeline -->
@@ -179,11 +206,8 @@
                   </div>
                   <!-- /.tab-pane -->
                   <div class="tab-pane" id="settings">
-                     <form action="<?php echo e(url('leave')); ?>" class="form-horizontal" autocomplete="off" method="post">
+                    <form action="<?php echo e(url('leave')); ?>" class="form-horizontal" autocomplete="off" method="post">
                       <?php echo csrf_field(); ?>
-                      <div class="form-group row">
-                        <!-- <label  for="inputName" class="col-sm-2 col-form-label">User Id</label> -->
-                      </div>
                       <div class="form-group row">
                         <div class="col-sm-10">
                           <input name="user_id" type="hidden" class="form-control"  value="<?php echo e(auth::user()->id); ?>">

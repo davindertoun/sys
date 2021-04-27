@@ -42,7 +42,7 @@ class DailyQuote extends Command
 
 
         \Log::info("Cron is working fine!");
-           $users = User::all()->get();
+           $users = User::all();
            foreach ($users as $key => $user) {
                 $exist = Attendance::where('user_id',$user->id)->where('created_at',date('Y-m-d'))->first();
                 if(empty($exist)){
@@ -52,7 +52,7 @@ class DailyQuote extends Command
             'time_out' => date('Y-m-d'),
             'state_id'=>2,
             'created_at'=> date('Y-m-d'),
-            'working_hours'=>0;
+            'working_hours'=>0,
         ]);
         $data->save();
                 }

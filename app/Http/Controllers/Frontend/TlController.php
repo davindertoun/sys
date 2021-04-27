@@ -21,4 +21,9 @@ class TlController extends Controller
 		$Birthday= User::whereMonth('dob', '>', $date->month)->orWhereMonth('dob', '=', $date->month)->whereDay('dob', '>=', $date->day)->take(5)->orderByRaw('DATE_FORMAT(dob, "%m-%d")')->get();
     	return view('frontend.tl_dashboard',compact('result','attendance','today','data','Birthday'));
     }
+    public function user_leave_request()
+    {
+        $Leave = Leave::all();
+        return view('frontend.User_leave',compact('Leave'));
+    }
 }

@@ -13,10 +13,13 @@ class Leave extends Model
         'user_id',
         'start_date',
         'end_date',
-        'leave_status',
         'description',
         'reject_description',
         'state_id',
         'type_id',
     ];
+    public function user() 
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }

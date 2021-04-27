@@ -19,4 +19,8 @@ class Attendance extends Model
         'state_id',
         'type_id',
     ];
+    public function user() 
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }

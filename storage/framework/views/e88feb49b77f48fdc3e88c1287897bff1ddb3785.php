@@ -94,6 +94,7 @@
                   <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Leave List</a></li>
                   
                   <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Leave</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#feedback" data-toggle="tab">Feedback</a></li>
                 </ul>
                 <?php if(empty($today)): ?>
                 <button name="timein" class="btn btn-success float-right" getId="<?php echo e(auth()->user()->id); ?>" id="timeIn">Time In</button>
@@ -179,6 +180,23 @@
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </tbody>
                     </table>
+                  </div>
+                  <div class="tab-pane" id="feedback">
+                    <form action="<?php echo e(url('feedback')); ?>" class="form-horizontal" autocomplete="off" method="post">
+                      <?php echo csrf_field(); ?>
+                      <div class="form-group row">
+                        <input type="hidden" name="id" value="<?php echo e(auth()->user()->id); ?>">
+                        <label for="inputExperience" class="col-sm-2 col-form-label">Feedback</label>
+                        <div class="col-sm-10">
+                          <textarea name="feedback" class="form-control" placeholder="give your feedback" required="required"></textarea>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="offset-sm-2 col-sm-10">
+                          <button  value="submit" name="submit" type="submit" class="btn btn-danger">Submit</button>
+                        </div>
+                      </div>
+                    </form>
                   </div>
                   <!-- /.tab-pane -->
                   <div class="tab-pane" id="settings">

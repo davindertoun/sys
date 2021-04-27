@@ -21,4 +21,12 @@ class UserController extends Controller
 		$Birthday= User::whereMonth('dob', '>', $date->month)->orWhereMonth('dob', '=', $date->month)->whereDay('dob', '>=', $date->day)->take(5)->orderByRaw('DATE_FORMAT(dob, "%m-%d")')->get();
     	return view('index',compact('result','attendance','today','data','Birthday'));
 	}
+	public function feedback(Request $request)
+    {
+        $id = $request->input('id');
+        $data = User::where(['id'=>$id])->first();
+        $data->feedback = $request->input('feedback');
+        $data->save();
+        return redirect()->back()->with(['success'=>'Thanku for your feedback']);
+    }
 }
